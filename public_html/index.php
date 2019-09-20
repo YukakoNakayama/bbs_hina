@@ -14,29 +14,23 @@
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-<header class="sticky-top header">
-<div class="header__inner">
-  <nav>
-    <ul>
-      <li><a href="./">ホーム</a></li>
-      <!-- 非ログイン時のみ表示 -->
-      <li class="user-btn"><a href="./login.html">ログイン</a></li>
-      <li><a href="./signup.html">ユーザー登録</a></li>
-    </ul>
-  </nav>
-  <!-- ログイン時のみ表示 -->
-  <div class="header-r">
-  </div>
-</div>
-</header>
-<div class="wrapper">
-<h1 class="page__ttl">ホーム画面</h1>
-<p>メニュー</p>
-<p class="fs12"><a href="login.html">ログイン</a></p>
-<p class="fs12"><a href="signup.html">ユーザー登録</a></p>
-</div> <!-- wrapper -->
-<p class="copy"><small>&copy; 2019 code lab.</small></p>
-<script src="./js/bbs.js"></script>
+  <!-- ヘッダーのパスを読み込む -->
+  <?php
+  require_once(__DIR__ . '/header.php');
+  require_once(__DIR__ . '/../lib/Model.php');
+  $model = new \Bbs\Model;
+  ?>
+  <!-- ホーム画面の記述 -->
+  <h1 class="page__ttl">ホーム画面</h1>
+  <p>メニュー</p>
+  <p class="fs12"><a href="login.php">ログイン</a></p>
+  <p class="fs12"><a href="signup.php">ユーザー登録</a></p>
+  <!-- フッターのパスを読み込む -->
+  <?php
+    require_once(__DIR__ . '/footer.php');
+  ?>
+  <!-- wrapper -->
+  <script src="./js/bbs.js"></script>
 </body>
 </html>
 

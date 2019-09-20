@@ -14,39 +14,53 @@
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-<header class="sticky-top header">
+<?php
+  require_once(__DIR__ . '/header.php');
+  require_once(__DIR__ . '/../lib/Controller.php');
+  require_once(__DIR__ . '/../lib/Model.php');
+  require_once(__DIR__ . '/../lib/Controller/Login.php');
+  require_once(__DIR__ . '/../lib/Model/User.php');
+
+  $app = new Bbs\Controller\Login();
+  $app->run();
+?>
+
+<!-- <header class="sticky-top header">
 <div class="header__inner">
   <nav>
     <ul>
       <li><a href="./">ホーム</a></li>
-      <!-- 非ログイン時のみ表示 -->
+       非ログイン時のみ表示 
       <li class="user-btn"><a href="./login.html">ログイン</a></li>
       <li><a href="./signup.html">ユーザー登録</a></li>
     </ul>
   </nav>
-  <!-- ログイン時のみ表示 -->
+   ログイン時のみ表示 
   <div class="header-r">
   </div>
 </div>
-</header>
+</header> -->
+
 <div class="wrapper">
 <div class="container">
-  <form action="thread_all.html" method="post" id="login" class="form">
+  <form action="" method="post" id="login" class="form">
     <div class="form-group">
       <label>メールアドレス</label>
-      <input type="text" name="email" value="" class="form-control">
+      <input type="text" name="email" value="<?= isset($app->getValues()->email) ? h($app->getValues()->email) : ""; ?>" class="form-control">
     </div>
     <div class="form-group">
       <label>パスワード</label>
       <input type="password" name="password" class="form-control">
     </div>
-    <p class="err"></p>
-    <button class="btn btn-primary">ログイン</button>
+    <p class="err"><?= h($app->getErrors('login')); ?></p>
+    <button class="btn btn-primary" onclick="document.getElementById('login').submit();">ログイン</button>
+    <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
   </form>
-  <p class="fs12"><a href="signup.html">ユーザー登録</a></p>
+  <p class="fs12"><a href="signup.php">ユーザー登録</a></p>
 </div><!--container -->
 </div> <!-- wrapper -->
-<p class="copy"><small>&copy; 2019 code lab.</small></p>
-<script src="./js/bbs.js"></script>
+<?php require_once(__DIR__ .'/footer.php'); ?>
+<!-- <p class="copy"><small>&copy; 2019 code lab.</small></p>
+<script src="./js/bbs.js"></script> -->
 </body>
 </html>

@@ -14,16 +14,21 @@
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-<header class="sticky-top header">
+<?php
+  require_once(__DIR__ . '/../config/config.php');
+  require_once(__DIR__ . '/../lib/Controller.php');
+?>
 <div class="header__inner">
   <nav>
     <ul>
-      <li><a href="<?= SITE_URL; ?>/">ホーム</a></li>
+      <li><a href="<?= SITE_URL; ?>/index.php">ホーム</a></li>
       <?php
+      // ログイン時の表示
       if(isset($_SESSION['me'])) { ?>
       <li><a href="<?= SITE_URL; ?>/thread_all.php">一覧</a></li>
       <li><a href="<?= SITE_URL; ?>/thread_favorite.php">お気に入り</a></li>
       <li><a href="<?= SITE_URL; ?>/thread_create.php">作成</a></li>
+      <!-- ログアウト時の表示 -->
       <?php } else { ?>
         <li class="user-btn"><a href="<?= SITE_URL; ?>/login.php">ログイン</a></li>
         <li><a href="<?= SITE_URL; ?>/signup.php">ユーザー登録</a></li>
