@@ -1,5 +1,5 @@
 <?php
-
+// use \Exception;
 namespace Bbs\Controller;
 
 class Login extends \Bbs\Controller {
@@ -9,12 +9,20 @@ class Login extends \Bbs\Controller {
       // header('Location: ' . SITE_URL);
       exit();
     }
+
+    
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      // var_dump($_SERVER['REQUEST_METHOD']);
+      // var_dump($_POST['email']);
+      // exit();  
       $this->postProcess();
     }
   }
 
   protected function postProcess() {
+    // var_dump('test');
+    // exit();
+
     try {
       $this->validate();
     } catch (\Bbs\Exception\EmptyPost $e) {
@@ -28,10 +36,14 @@ class Login extends \Bbs\Controller {
     } else {
       try {
         $userModel = new \Bbs\Model\User();
+        // var_dump($userModel);
+        // exit();
         $user = $userModel->login([
           'email' => $_POST['email'],
           'password' => $_POST['password']
         ]);
+        //var_dump($user);
+        //exit();
       }
       catch(\Bbs\Exception\UnmatchEmailOrPassword $e) {
         $this->setErrors('login', $e->getMessage());
@@ -52,7 +64,7 @@ class Login extends \Bbs\Controller {
       header('Location: '. SITE_URL . '/thread_all.php');
       exit();
     }
-  }
+   }
 
   private function validate(){
     //トークンが空またはPOST送信とセッションに格納された値が異なるとエラーが出る
@@ -73,9 +85,9 @@ class Login extends \Bbs\Controller {
       exit();
     }
     if ($_POST['email'] === '' || $_POST['password'] === '') {
-      // throw new \Bbs\Exception\EmptyPost("メールアドレスとパスワードを入力してください!");
-      echo "メールアドレスとパスワードを入力してください";
-      exit();
+       //throw new \Bbs\Exception\EmptyPost("メールアドレスとパスワードを入力してください!");
+      // echo "メールアドレスとパスワードを入力してください";
+       //exit();
     }
   }
 }
