@@ -1,3 +1,7 @@
+<?php
+  require_once(__DIR__ . '/../config/config.php');
+  // require_once(__DIR__ . '/../lib/Controller.php');
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -14,10 +18,7 @@
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-<?php
-  require_once(__DIR__ . '/../config/config.php');
-  require_once(__DIR__ . '/../lib/Controller.php');
-?>
+
 <div class="header__inner">
   <nav>
     <ul>

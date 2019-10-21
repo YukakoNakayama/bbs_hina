@@ -29,7 +29,7 @@ class Controller {
   }
 
   protected function setErrors($key,$error) {
-    $this->errors->$key - $error;
+    $this->errors->$key = $error;
   }
 
   public function getErrors($key) {

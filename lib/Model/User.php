@@ -3,6 +3,20 @@
 namespace Bbs\Model;
 
 class User extends \Bbs\Model {
+  public function create($values) {
+    $stmt = $this->db->prepare("INSERT INTO users (username,email,password,created,modified) VALUES (:username,:email,:password,now(),now())");
+    $res = $stmt->execute([
+      ':username' =>$values['username'],
+      ':email' => $values['email'],
+      //パスワードのハッシュ化
+      ':password' => password_hash($values['password'],PASSWORD_DEFAULT)
+    ]);
+
+    //メールアドレスがユニークでなければfalse
+    if ($res === false) {
+      throw new \Bbs\Exception\DuplicateEmail();
+    }
+  }
 
   public function login($values) {
   // var_dump($values['password']);
@@ -23,6 +37,10 @@ class User extends \Bbs\Model {
     if (empty($user)) {
       throw new \Bbs\Exception\UnmatchEmailOrPassword();
     }
+
+    $password = password_hash($values['password'],PASSWORD_DEFAULT);
+    // var_dump($password);
+    // exit();
 
     //パスワードが一致しないとエラー
     if (!password_verify($values['password'], $user->password)) {

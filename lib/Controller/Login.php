@@ -6,15 +6,14 @@ class Login extends \Bbs\Controller {
   public function run() {
     //ログインしていればトップページへ移動
     if ($this->isLoggedIn()) {
-      // header('Location: ' . SITE_URL);
+      header('Location: ' . SITE_URL);
       exit();
     }
 
-    
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // var_dump($_SERVER['REQUEST_METHOD']);
       // var_dump($_POST['email']);
-      // exit();  
+      // exit();
       $this->postProcess();
     }
   }
@@ -85,9 +84,9 @@ class Login extends \Bbs\Controller {
       exit();
     }
     if ($_POST['email'] === '' || $_POST['password'] === '') {
-       //throw new \Bbs\Exception\EmptyPost("メールアドレスとパスワードを入力してください!");
+       throw new \Bbs\Exception\EmptyPost("メールアドレスとパスワードを入力してください!");
       // echo "メールアドレスとパスワードを入力してください";
-       //exit();
+      //exit();
     }
   }
 }
