@@ -1,7 +1,12 @@
 <?php require_once(__DIR__ .'/header.php'); ?>
 <div class="wrapper">
 <h1 class="page__ttl">スレッド詳細</h1>
-<div class="thread">
+<div class="threads">
+<?php $sql=mysql_query("SELECT * FROM `threads` INNER JOIN comments ON threads.id = comments.thread_id;");
+echo $sql;
+?>
+</div>
+<!-- <div class="thread">
   <div class="thread__item">
     <div class="thread__head">
       <h2 class="thread__ttl">
@@ -42,7 +47,7 @@
     <p class="comment-page thread__date">スレッド作成日時：スレッド作成日時：2019-06-10 16:03:01
     </p>
   </div>
-</div><!-- thread -->
+</div>thread -->
 </div> <!-- wrapper -->
 <?php require_once(__DIR__ .'/footer.php'); ?>
 </body>

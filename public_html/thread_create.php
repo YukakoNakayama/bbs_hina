@@ -16,7 +16,7 @@ $app->run();
     <input type="hidden" name="type" value="createthread">
     <p class="err"><?= h($app->getErrors('create_thread')); ?></p>
   </div>
-  <div class="form-group btn btn-primary" onclick="document.getElementByID('new_thread').submit();">作成</div>
+  <div class="form-group btn btn-primary" onclick="document.getElementById('new_thread').submit();">作成</div>
 </form>
 <?php
 require_once(__DIR__ .'/footer.php');

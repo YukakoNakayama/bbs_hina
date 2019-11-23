@@ -22,5 +22,17 @@ class Thread extends \Bbs\Model {
       $this->db->rollBack();
     }
   }
+
+  public function getThreadAll(){
+    $stmt = $this->db->query("SELECT id,title,created FROM threads WHERE delflag = 0 ORDER BY id DESC");
+    return $stmt->fetchAll(\PDO::FETCH_OBJ);
+  }
+
+  public function getComment($thread_id) {
+    var_dump($thread_id);
+    // $stmt = $this->db->query("SELECT comment_num,username,content,comments.created FROM (threads INNER JOIN comments ON threads.id = comments.thread_id) INNER JOIN users ON comments.user_id = users.id WHERE threads.id =:thread_id AND comments.delflag = 0 ORDER BY comment_num ASC LIMIT 5;");
+    // $stmt->execute([':thread_id' => $thread_id]);
+    // return $stmt->fetchAll(\PDO::FETCH_OBJ);
+  }
 }
 ?>
