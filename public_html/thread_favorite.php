@@ -1,5 +1,7 @@
-<?php 
+<?php
 require_once(__DIR__ .'/header.php');
+$threadApp = new Bbs\Model\Thread();
+$threads = $threadApp->getThreadFavoriteAll();
 ?>
 <h1 class="page__ttl">お気に入り一覧</h1>
 <ul class="thread">
@@ -23,11 +25,14 @@ require_once(__DIR__ .'/header.php');
             <span class="comment__item__date"><?= h($comment->created); ?></span>
           </div>
           <p class="comment__item__content"><?= h()?></p>
+          <?php endforeach; ?>
         </li>
       </ul>
+      <div class="operation">
+        <a href="<?= SITE_URL; ?>/thread_disp.php?thread_id=<?= $thread->t_id; ?>">書き込み&すべて読む(<?= h($threadApp->getCommentCount($thread->t_id)); ?>)</a>
+        <p class="thread__date">スレッド作成日時：<?= h($thread->created); ?></p>
+      </div>
     </li>
+    <?php endforeach?>
 </ul>
-
 <?php require_once(__DIR__ .'/footer.php'); ?>
-</body>
-</html>
