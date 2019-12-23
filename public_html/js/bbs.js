@@ -1,5 +1,4 @@
 $(function () {
-  // アップロードするファイルを選択
   $('input[type=file]').change(function () {
     var file = $(this).prop('files')[0];
 
@@ -7,21 +6,39 @@ $(function () {
     if (!file.type.match('image.*')) {
       // クリア
       $(this).val('');
-      $('.imgarea').html('');
+      $('.imgfile').html('');
       return;
     }
 
     // 画像表示
     var reader = new FileReader();
     reader.onload = function () {
-      var img_src = $('<img>').attr('src', reader.result);
-      $('.imgarea').html(img_src);
+      var img_src = $('<img>').attr('src',reader.result);
+      $('.imgfile').html(img_src);
+      $('.imgarea').removeClass('noimage');
     }
     reader.readAsDataURL(file);
   });
 
-  $('.fav__btn').on('click', function () {
+  $('.fav__btn').on('click',function(){
+    origin = location.origin;
     $favbtn = $(this);
-    $($favbtn).toggleClass('active');
-  });
+    $threadid = $favbtn.parent().parent().data('threadid');
+    $myid = $('.prof-show').data('me');
+    $.ajax({
+    type: 'post',
+    url: origin + '/public_html/ajax.php',
+    data: {
+    'thread_id': $threadid,
+    'user_id': $myid,
+    }
+    })
+     .done(function (data) {
+     if(data == 1) {
+     $($favbtn).addClass('active');
+     } else {
+     $($favbtn).removeClass('active');
+    }
+    })
+  })
 });

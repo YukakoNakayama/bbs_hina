@@ -1,53 +1,52 @@
-<?php require_once(__DIR__ .'/header.php'); ?>
+<html>
+<?php
+  require_once(__DIR__ .'/header.php');
+  $threadCon = new Bbs\Controller\Thread();
+  $threadCon->run();
+  $thread_id = $_GET['thread_id'];
+  $threadMod = new Bbs\Model\Thread();
+  $threadDisp = $threadMod->getThread($thread_id);
+?>
 <div class="wrapper">
 <h1 class="page__ttl">スレッド詳細</h1>
-<div class="threads">
-<?php $sql=mysql_query("SELECT * FROM `threads` INNER JOIN comments ON threads.id = comments.thread_id;");
-echo $sql;
-?>
-</div>
-<!-- <div class="thread">
+<div class="thread">
   <div class="thread__item">
     <div class="thread__head">
       <h2 class="thread__ttl">
-        PHPおすすめの勉強方法
+        <?= h($threadDisp->title); ?>
       </h2>
-      <form id="csvoutput">
-        <button class="btn btn-primary">CSV出力</button>
-      </form>
     </div>
     <ul class="thread__body">
+    <?php
+      $comments = $threadMod->getCommentAll($threadDisp->id);
+      foreach ($comments as $comment):
+    ?>
       <li class="comment__item">
         <div class="comment__item__head">
-          <span class="comment__item__num">1</span>
-          <span class="comment__item__name">名前：ネコちゃん</span>
-          <span class="comment__item__date">投稿日時：2019-06-10 16:03:01</span>
+          <span class="comment__item__num"><?= h($comment->comment_num); ?></span>
+          <span class="comment__item__name">名前：<?= h($comment->username); ?></span>
+          <span class="comment__item__date">投稿日時：<?= h($comment->created); ?></span>
         </div>
-        <p class="comment__item__content">ProgateでPHPのレッスンを終えたばかりの初心者です。勉強方法でおすすめがありましたら、教えてください。</p>
-      </li>
-      <li class="comment__item">
-        <div class="comment__item__head">
-          <span class="comment__item__num">2</span>
-          <span class="comment__item__name">名前：タケオ</span>
-          <span class="comment__item__date">投稿日時：2019-06-10 16:40:01</span>
-        </div>
-        <p class="comment__item__content">まずは初心者向けの書籍を1周しましょう。</p>
+        <p class="comment__item__content"><?= h($comment->content); ?></p>
+      <?php endforeach;?>
       </li>
     </ul>
-    <form class="form-group">
+    <form action="" method="post" class="form-group">
       <div class="form-group">
         <label>コメント</label>
-        <textarea type="text" name="content" class="form-control"></textarea>
-        <p class="err"></p>
+        <textarea type="text" name="content" class="form-control"><?= isset($threadCon->getValues()->content) ? h($threadCon->getValues()->content) : ''; ?></textarea>
+        <p class="err"><?= h($threadCon->getErrors('comment')); ?></p>
+        <input type="hidden" name="type" value="createComment">
+        <input type="hidden" name="thread_id" value="<?= $threadDisp->id ?>">
       </div>
       <div class="form-group">
         <input type="submit" value="書き込み" class="btn btn-primary">
       </div>
     </form>
-    <p class="comment-page thread__date">スレッド作成日時：スレッド作成日時：2019-06-10 16:03:01
+    <p class="comment-page thread__date">スレッド作成日時：<?= h($threadDisp->created); ?>
     </p>
   </div>
-</div>thread -->
+</div>
 </div> <!-- wrapper -->
 <?php require_once(__DIR__ .'/footer.php'); ?>
 </body>

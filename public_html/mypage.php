@@ -1,44 +1,47 @@
 <?php
 require_once(__DIR__ .'/header.php');
+$app = new Bbs\Controller\UserUpdate();
+$app->run();
 ?>
-<div class="wrapper">
 <h1 class="page__ttl">マイページ</h1>
 <div class="container">
-  <form id="userupdate" class="form mypage-form">
-    <div class="form-group">
-      <label>メールアドレス</label>
-      <input type="text" name="email" value="" class="form-control">
+  <form action="" method="post" id="userupdate" class="form mypage-form row" enctype="multipart/form-data">
+    <div class="col-md-8">
+      <div class="form-group">
+        <label>メールアドレス</label>
+        <input type="text" name="email" value="<?= isset($app->getValues()->email)? h($app->getValues()->email): ''; ?>" class="form-control">
+        <p class="err"><?= h($app->getErrors('email')); ?></p>
+      </div>
+      <div class="form-group">
+        <label>ユーザー名</label>
+        <input type="text" name="username" value="<?= isset($app->getValues()->username) ? h($app->getValues()->username): ''; ?>" class="form-control">
+        <p class="err"><?= h($app->getErrors('username')); ?></p>
+      </div>
+      <button class="btn btn-primary" onclick="document.getElementById('userupdate').submit();">更新</button>
+      <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+      <input type="hidden" name="old_image" value="<?= h($app->getValues()->image); ?>">
       <p class="err"></p>
     </div>
-    <div class="form-group">
-      <label>ユーザー名</label>
-      <input type="text" name="username" value="" class="form-control">
-      <p class="err"></p>
-    </div>
-    <div class="form-group">
-      <label>プロフィール画像</label>
-      <label>
-      <span class="file-btn btn btn-info">
-        ファイルを選んでください
-        <input type="file" name="image" class="form" style="display:none" accept="image/*">
-      </span>
-      </label>
-      <p class="err"></p>
-      <div class="imgarea">
-      <p>現在の画像</p>
-      <img src="./gazou/img_5cfa2e5c0c60e.jpg">
+    <div class="col-md-4">
+      <div class="form-group">
+        <div class="imgarea <?= isset($app->getValues()->image) ? '': 'noimage' ?>">
+          <label>
+            <span class="file-btn">
+              編集
+              <input type="file" name="image" class="form"  style="display:none" accept="image/*">
+            </span>
+          </label>
+          <div class="imgfile">
+            <img src="<?= isset($app->getValues()->image) ? './gazou/'. h($app->getValues()->image) : './asset/img/noimage.png'; ?>" alt="">
+          </div>
+        </div>
       </div>
     </div>
-    <p class="err"></p>
-    <button class="btn btn-primary">更新</button>
   </form>
   <form class="user-delete" action="user_delete_confirm.php">
     <input type="submit" class="btn btn-default" value="退会する">
   </form>
 </div><!--container -->
-</div> <!-- wrapper -->
 <?php
 require_once(__DIR__ .'/footer.php');
 ?>
-</body>
-</html>

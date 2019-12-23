@@ -3,8 +3,10 @@ namespace Bbs\Controller;
 class Thread extends \Bbs\Controller {
   public function run() {
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      if($_POST['type'] === 'createthread') {
+      if($_POST['type'] === 'createThread') {
         $this->createThread();
+      } elseif($_POST['type'] === 'createComment') {
+        $this->createComment();
       }
     }
   }
@@ -31,6 +33,30 @@ class Thread extends \Bbs\Controller {
       header('Location: '. SITE_URL .'/thread_all.php');
       exit();
     }
+  }
+
+  private function createComment() {
+    try {
+      $this->validate();
+    } catch (\Bbs\Exception\EmptyPost $e) {
+      $this->setErrors('comment', $e->getMessage());
+    } catch (\Bbs\Exception\CharLength $e) {
+      $this->setErrors('comment', $e->getMessage());
+    }
+    $this->setValues('content', $_POST['content']);
+    if ($this->hasError()) {
+      return;
+    } else {
+      $threadModel = new \Bbs\Model\Thread();
+      var_dump($_POST['thread_id']);
+      $threadModel->createComment([
+        'thread_id' => $_POST['thread_id'],
+        'user_id' => $_SESSION['me']->id,
+        'content' => $_POST['content']
+      ]);
+    }
+    header('Location: '. SITE_URL . '/thread_disp.php?thread_id=' . $_POST['thread_id']);
+    exit();
   }
 
   //バリデーション

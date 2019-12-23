@@ -13,7 +13,7 @@ $app->run();
     <label>最初のコメント</label>
     <textarea type="text" name="comment" class="form-control"><?= isset($app->getValues()->comment) ? h($app->getValues()->comment) : '';?></textarea>
     <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
-    <input type="hidden" name="type" value="createthread">
+    <input type="hidden" name="type" value="createThread">
     <p class="err"><?= h($app->getErrors('create_thread')); ?></p>
   </div>
   <div class="form-group btn btn-primary" onclick="document.getElementById('new_thread').submit();">作成</div>

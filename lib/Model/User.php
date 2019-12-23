@@ -30,17 +30,12 @@ class User extends \Bbs\Model {
     $stmt->setFetchMode(\PDO::FETCH_CLASS, 'stdClass');
     $user = $stmt->fetch();
 
-    // var_dump($user);
-    // exit();
-
     //レコードが取得できなかった場合エラー
     if (empty($user)) {
       throw new \Bbs\Exception\UnmatchEmailOrPassword();
     }
 
     $password = password_hash($values['password'],PASSWORD_DEFAULT);
-    // var_dump($password);
-    // exit();
 
     //パスワードが一致しないとエラー
     if (!password_verify($values['password'], $user->password)) {
@@ -54,5 +49,26 @@ class User extends \Bbs\Model {
 
     return $user;
   }
+
+  public function find($id) {
+    $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
+    $stmt->bindValue('id',$id);
+    $stmt->execute();
+    $stmt->setFetchMode(\PDO::FETCH_CLASS, 'stdClass');
+    $user = $stmt->fetch();
+    return $user;
+  }
+
+  public function update($values) {
+    $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email, image = :image, modified = now() WHERE id = :id");
+    $stmt->execute([
+      ':username' => $values['username'],
+      ':email' => $values['email'],
+      'image' => $values['userimg'],
+      ':id' => $_SESSION['me']->id
+    ]);
+    if ($res === false) {
+      throw new \Bbs\Exception\DuplicateEmail();
+    }
+  }
 }
-?>
