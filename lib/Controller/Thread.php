@@ -8,6 +8,9 @@ class Thread extends \Bbs\Controller {
       } elseif($_POST['type'] === 'createComment') {
         $this->createComment();
       }
+    } elseif($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['type'])) {
+      $threadData = $this->searchThread();
+      return $threadData;
     }
   }
 
@@ -104,13 +107,15 @@ class Thread extends \Bbs\Controller {
 
   //バリデーション
   private function validate() {
+    // 修正
     if ($_POST['type'] === 'createthread') {
-      if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']){
-        echo "不正なトークンです！";
+      echo '1';
+      if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
+        echo "不正なトークンです!";
       exit();
       }
       if (!isset($_POST['thread_name'])){
-        echo "不正な投稿です";
+        echo '不正な投稿です';
       exit();
       }
       if ($_POST['thread_name'] === '' || $_POST['comment'] === ''){
@@ -121,6 +126,31 @@ class Thread extends \Bbs\Controller {
       }
       if (mb_strlen($_POST['comment']) > 200) {
         throw new \Bbs\Exception\CharLength("コメントが長すぎます！");
+      }
+      // 修正
+    } elseif( $_POST['type'] === 'createcomment' ) {
+      echo '2';
+      if (!isset($_POST['content'])) {
+        echo "不正な投稿です！";
+        exit();
+      }
+      if ($_POST['content'] === ''){
+        throw new \Bbs\Exception\EmptyPost("コメントが入力されていません！");
+      }
+      if (mb_strlen($_POST['content']) > 200) {
+        throw new \Bbs\Exception\CharLength("コメントが長すぎます！");
+      }
+    } elseif($_GET['type'] === 'searchthread') {
+      echo '3';
+      if (!isset($_GET['keyword'])) {
+        echo "不正な投稿です！";
+        exit();
+      }
+      if ($_GET['keyword'] === ''){
+        throw new \Bbs\Exception\EmptyPost("キーワードが入力されていません！");
+      }
+      if (mb_strlen($_GET['keyword']) > 20) {
+        throw new \Bbs\Exception\CharLength("キーワードが長すぎます！");
       }
     }
   }
