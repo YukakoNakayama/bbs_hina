@@ -4,6 +4,15 @@ $threadApp = new Bbs\Model\Thread();
 $threads = $threadApp->getThreadFavoriteAll();
 ?>
 <h1 class="page__ttl">お気に入り一覧</h1>
+<form action="thread_search.php" method="get" class="form-group form-search">
+    <div class="form-group">
+      <input type="text" name="keyword" placeholder="スレッド検索">
+    </div>
+    <div class="form-group">
+      <input type="submit" value="検索" class="btn btn-primary">
+      <input type="hidden" name="type" value="searchthread">
+    </div>
+  </form>
 <ul class="thread">
   <?php foreach ($threads as $thread): ?>
     <li class="thread__item" data-threadid="<?= $thread->t_id; ?>">
@@ -21,10 +30,10 @@ $threads = $threadApp->getThreadFavoriteAll();
         <li class="comment__item">
           <div class="comment__item__head">
             <span class="comment__item__num"><?= h($comment->comment_num); ?></span>
-            <span class="comment__item__name"><?= h($comment->username); ?></span>
-            <span class="comment__item__date"><?= h($comment->created); ?></span>
+            <span class="comment__item__name">名前：<?= h($comment->username); ?></span>
+            <span class="comment__item__date">投稿日時：<?= h($comment->created); ?></span>
           </div>
-          <p class="comment__item__content"><?= h()?></p>
+          <p class="comment__item__content"><?= h($comment->content); ?></p>
           <?php endforeach; ?>
         </li>
       </ul>

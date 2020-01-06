@@ -7,12 +7,13 @@ $threads = $threadMod->getThreadAll();
 
 <ul class="wrapper">
   <h1 class="page__ttl">スレッド一覧</h1>
-  <form action="thread_search.php" class="form-group form-search">
+  <form action="thread_search.php" method="get" class="form-group form-search">
     <div class="form-group">
       <input type="text" name="keyword" placeholder="スレッド検索">
     </div>
     <div class="form-group">
       <input type="submit" value="検索" class="btn btn-primary">
+      <input type="hidden" name="type" value="searchthread">
     </div>
   </form>
   <ul class="thread">

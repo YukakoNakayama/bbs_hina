@@ -25,9 +25,10 @@ $(function () {
     $favbtn = $(this);
     $threadid = $favbtn.parent().parent().data('threadid');
     $myid = $('.prof-show').data('me');
+    //jsonの書き方
     $.ajax({
     type: 'post',
-    url: origin + '/public_html/ajax.php',
+    url: origin + '/bbs_hina/public_html/ajax.php',
     data: {
     'thread_id': $threadid,
     'user_id': $myid,
