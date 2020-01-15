@@ -22,5 +22,3 @@ $app->run();
 </div><!--container -->
 </div> <!-- wrapper -->
 <?php require_once(__DIR__ .'/footer.php'); ?>
-</body>
-</html>

@@ -7,4 +7,14 @@
   require_once(__DIR__ . '/../lib/Controller/functions.php');
   require_once(__DIR__ . '/autoload.php');
   session_start();
+  $current_url = $_SERVER["REQUEST_URI"];
+  if(strpos($current_url,'login.php') !== false) {
+  } elseif(strpos($current_url,'signup.php') !== false) {
+  } elseif(strpos($current_url,'index.php') !== false) {
+  } else {
+    if(!isset($_SESSION['me'])){
+      header('Location: ' . SITE_URL . '/login.php');
+      exit();
+    }
+  }
 ?>
