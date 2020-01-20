@@ -17,7 +17,7 @@ $threads = $threadCon->run();
   </div>
 </form>
 <!-- thread -->
-<?php $threads != '' ? $con = count($threads) : ''; ?>
+<?php $threads != '' ? $con = count($threads) : $con = 0; ?>
 <?php if(($threadCon->getErrors('keyword'))): ?>
 <?php else : ?>
 <div>キーワード：<?= $_GET['keyword']; ?>　　該当件数：<?= $con;?>件</div>

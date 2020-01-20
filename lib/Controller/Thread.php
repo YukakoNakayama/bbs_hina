@@ -88,7 +88,7 @@ class Thread extends \Bbs\Controller {
 
   public function searchThread() {
     try {
-      $this->validate();
+      $this->searchThreadValidate();
     } catch (\Bbs\Exception\EmptyPost $e) {
       $this->setErrors('keyword', $e->getMessage());
     } catch (\Bbs\Exception\CharLength $e) {
@@ -107,9 +107,7 @@ class Thread extends \Bbs\Controller {
 
   //バリデーション
   private function validate() {
-    // 修正
     if ($_POST['type'] === 'createthread') {
-      echo '1';
       if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
         echo "不正なトークンです!";
       exit();
@@ -127,9 +125,7 @@ class Thread extends \Bbs\Controller {
       if (mb_strlen($_POST['comment']) > 200) {
         throw new \Bbs\Exception\CharLength("コメントが長すぎます！");
       }
-      // 修正
     } elseif( $_POST['type'] === 'createcomment' ) {
-      echo '2';
       if (!isset($_POST['content'])) {
         echo "不正な投稿です！";
         exit();
@@ -140,8 +136,10 @@ class Thread extends \Bbs\Controller {
       if (mb_strlen($_POST['content']) > 200) {
         throw new \Bbs\Exception\CharLength("コメントが長すぎます！");
       }
-    } elseif($_GET['type'] === 'searchthread') {
-      echo '3';
+    }
+  }
+  private function searchThreadValidate() {
+    if($_GET['type'] === 'searchthread') {
       if (!isset($_GET['keyword'])) {
         echo "不正な投稿です！";
         exit();
