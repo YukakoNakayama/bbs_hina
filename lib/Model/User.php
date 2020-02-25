@@ -64,7 +64,7 @@ class User extends \Bbs\Model {
     $stmt->execute([
       ':username' => $values['username'],
       ':email' => $values['email'],
-      'image' => $values['userimg'],
+      ':image' => $values['userimg'],
       ':id' => $_SESSION['me']->id
     ]);
     if ($res === false) {
@@ -72,10 +72,29 @@ class User extends \Bbs\Model {
     }
   }
   public function delete() {
-    $stmt = $this->db->prepare("UPDATE users SET delflag = :delflag,modified = now() where id = :id");
+    $stmt = $this->db->prepare("UPDATE users SET delflag = :delflag, modified = now() where id = :id");
     $stmt->execute([
       ':delflag' => 1,
       ':id' => $_SESSION['me']->id,
     ]);
+  }
+
+  public function getUserAll(){
+    $user_id = $_SESSION['me']->id;
+    $stmt = $this->db->query("SELECT id,username,email,image,delflag,created,modified FROM users");
+    return $stmt->fetchAll(\PDO::FETCH_OBJ);
+  }
+
+  public function updateUserAdmin($values){
+    if(isset($_POST['id'])){
+    $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email, image = :image, delflag = :delflag, created = :created, modified = now() WHERE id = :id");
+    $stmt->execute([
+      ':username' => $values['username'],
+      ':email' => $values['email'],
+      ':image' => $values['image'],
+      ':delflag' => $values['delflag'],
+      ':created' => $values['created'],
+      ':id' => $_SESSION['me']->id
+    ]);}
   }
 }

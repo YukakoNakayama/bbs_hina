@@ -4,7 +4,11 @@ class UserUpdate extends \Bbs\Controller {
   public function run() {
     $this->showUser();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $this->updateUser();
+      if($_POST['type'] === 'admin'){
+        $this->updateAdmin();
+      } else {
+        $this->updateUser();
+      }
     }
   }
 
@@ -59,6 +63,21 @@ class UserUpdate extends \Bbs\Controller {
     $_SESSION['me']->username = $_POST['username'];
     header('Location: '. SITE_URL . '/mypage.php');
     exit();
+  }
+
+  protected function updateAdmin() {
+    // var_dump($_POST);
+    // exit();
+    if(isset($_POST['id'])){
+    $userModel = new \Bbs\Model\User();
+    $userModel->updateUserAdmin([
+      'username' => $_POST['username'],
+      'email' => $_POST['email'],
+      'image' => $_POST['image'],
+      'delflag' => $_POST['delflag'],
+      'created' => $_POST['created']
+    ]);
+    }else{echo '選択されていません！';}
   }
 
   private function validate() {
