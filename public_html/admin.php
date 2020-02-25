@@ -24,7 +24,7 @@ $AdminUser->run();
       </tr>
       <?php foreach ($userS as $user): ?>
         <tr>
-          <td><input type="radio" name="id"></td>
+          <td><input type="radio" name="id" value="<?= h($user->id); ?>"></td>
           <td><?= h($user->id); ?></td>
           <td><input type="text" value="<?= h($user->username); ?>" name="username"></td>
           <td><input type="text" value="<?= h($user->email); ?>" name="email"></td>

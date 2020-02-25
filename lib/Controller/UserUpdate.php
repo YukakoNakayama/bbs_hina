@@ -66,19 +66,20 @@ class UserUpdate extends \Bbs\Controller {
   }
 
   protected function updateAdmin() {
-    // var_dump($_POST);
+    // var_dump($_REQUEST);
     // exit();
-    if(isset($_POST['id'])){
+    // if(isset($_POST['id'])) {
     $userModel = new \Bbs\Model\User();
     $userModel->updateUserAdmin([
+      'id' => $_POST['id'],
       'username' => $_POST['username'],
       'email' => $_POST['email'],
       'image' => $_POST['image'],
       'delflag' => $_POST['delflag'],
       'created' => $_POST['created']
     ]);
-    }else{echo '選択されていません！';}
   }
+
 
   private function validate() {
     if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {

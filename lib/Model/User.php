@@ -86,7 +86,6 @@ class User extends \Bbs\Model {
   }
 
   public function updateUserAdmin($values){
-    if(isset($_POST['id'])){
     $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email, image = :image, delflag = :delflag, created = :created, modified = now() WHERE id = :id");
     $stmt->execute([
       ':username' => $values['username'],
@@ -94,7 +93,9 @@ class User extends \Bbs\Model {
       ':image' => $values['image'],
       ':delflag' => $values['delflag'],
       ':created' => $values['created'],
-      ':id' => $_SESSION['me']->id
-    ]);}
+      ':id' => $values['id']
+    ]);
+    // var_dump($values);
+    // exit();
   }
 }
