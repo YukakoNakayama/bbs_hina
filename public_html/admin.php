@@ -24,14 +24,14 @@ $AdminUser->run();
       </tr>
       <?php foreach ($userS as $user): ?>
         <tr>
-          <td><input type="radio" name="id" value="<?= h($user->id); ?>"></td>
-          <td><?= h($user->id); ?></td>
-          <td><input type="text" value="<?= h($user->username); ?>" name="username"></td>
-          <td><input type="text" value="<?= h($user->email); ?>" name="email"></td>
-          <td><input type="text" value="<?= h($user->image); ?>" name="image"></td>
-          <td><input type="text" value="<?= h($user->delflag); ?>" name="delflag"></td>
-          <td><input type="text" value="<?= h($user->created); ?>" name="created"></td>
-          <td><input type="text" value="<?= h($user->modified); ?>" name="modified"></td>
+          <td><input type="radio" name="id" value="<?= $user->id; ?>"></td>
+          <td><?= $user->id; ?></td>
+          <td><input type="text" value="<?= $user->username; ?>" name="username<?= $user->id ?>"></td>
+          <td><input type="text" value="<?= $user->email; ?>" name="email<?= $user->id ?>"></td>
+          <td><input type="text" value="<?= $user->image; ?>" name="image<?= $user->id ?>"></td>
+          <td><input type="text" value="<?= $user->delflag; ?>" name="delflag<?= $user->id ?>"></td>
+          <td><input type="text" value="<?= $user->created; ?>" name="created<?= $user->id ?>"></td>
+          <td><input type="text" value="<?= $user->modified; ?>" name="modified<?= $user->id ?>"></td>
         </tr>
       <?php endforeach; ?>
     </tbody>

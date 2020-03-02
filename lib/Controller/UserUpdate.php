@@ -68,16 +68,17 @@ class UserUpdate extends \Bbs\Controller {
   protected function updateAdmin() {
     // var_dump($_REQUEST);
     // exit();
-    // if(isset($_POST['id'])) {
+    if(isset($_POST['id'])) {
     $userModel = new \Bbs\Model\User();
     $userModel->updateUserAdmin([
       'id' => $_POST['id'],
-      'username' => $_POST['username'],
-      'email' => $_POST['email'],
-      'image' => $_POST['image'],
-      'delflag' => $_POST['delflag'],
-      'created' => $_POST['created']
+      'username' => $_POST['username'.$_POST['id']],
+      'email' => $_POST['email'.$_POST['id']],
+      'image' => $_POST['image'.$_POST['id']],
+      'delflag' => $_POST['delflag'.$_POST['id']],
+      'created' => $_POST['created'.$_POST['id']]
     ]);
+    }
   }
 
 
