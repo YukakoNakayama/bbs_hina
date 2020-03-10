@@ -37,8 +37,9 @@ $AdminUser->run();
     </tbody>
   </table>
   </div>
-  <input type="submit" name="s" onclick="document.getElementByID('userAdmin').submit();" value="更新">
-  <input type="hidden" name="type" value="admin">
-  <input type="submit" name="s" value="削除">
+  <span><input type="submit" name="s" onclick="document.getElementByID('userAdmin').submit();" value="更新">
+  <input type="hidden" name="type" value="admin"></span>
+  <span><input type="submit" name="s" onclick="document.getElementByID('userAdmin').submit();" value="削除">
+  <input type="hidden" name="type" value="admindelete"></span>
   </form>
   </div>

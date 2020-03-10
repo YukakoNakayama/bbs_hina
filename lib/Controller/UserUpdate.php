@@ -6,6 +6,8 @@ class UserUpdate extends \Bbs\Controller {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if($_POST['type'] === 'admin'){
         $this->updateAdmin();
+      } elseif($_POST['type'] === 'admindelete') {
+        $this->adminDelete();
       } else {
         $this->updateUser();
       }
@@ -79,6 +81,16 @@ class UserUpdate extends \Bbs\Controller {
       'created' => $_POST['created'.$_POST['id']]
     ]);
     }
+  }
+
+  protected function adminDelete() {
+    if(isset($_POST['id'])) {
+      $userModel = new \Bbs\Model\User();
+      $userModel->adminDel([
+        'id' => $_POST['id'],
+        'delflag' => '1'
+      ]);
+      }
   }
 
 

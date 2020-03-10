@@ -85,17 +85,23 @@ class User extends \Bbs\Model {
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
-  public function updateUserAdmin($values){
+  public function updateUserAdmin(){
     $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email, image = :image, delflag = :delflag, created = :created, modified = now() WHERE id = :id");
     $stmt->execute([
-      ':username' => $values['username'.$values['id']],
-      ':email' => $values['email'.$values['id']],
-      ':image' => $values['image'.$values['id']],
-      ':delflag' => $values['delflag'.$values['id']],
-      ':created' => $values['created'.$values['id']],
-      ':id' => $values['id']
+      ':username' => $_POST['username'.$_POST['id']],
+      ':email' => $_POST['email'.$_POST['id']],
+      ':image' => $_POST['image'.$_POST['id']],
+      ':delflag' => $_POST['delflag'.$_POST['id']],
+      ':created' => $_POST['created'.$_POST['id']],
+      ':id' => $_POST['id']
     ]);
-    // var_dump($values);
-    // exit();
+  }
+
+  public function adminDel() {
+    $stmt = $this->db->prepare("UPDATE users SET delflag = :delflag, modified = now() WHERE id = :id");
+    $stmt->execute([
+      ':delflag' => '1',
+      ':id' => $_POST['id']
+    ]);
   }
 }
