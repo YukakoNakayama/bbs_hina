@@ -81,7 +81,7 @@ class User extends \Bbs\Model {
 
   public function getUserAll(){
     $user_id = $_SESSION['me']->id;
-    $stmt = $this->db->query("SELECT id,username,email,image,delflag,created,modified FROM users");
+    $stmt = $this->db->query("SELECT id,username,email,image,delflag,created,modified,adminflag FROM users");
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 

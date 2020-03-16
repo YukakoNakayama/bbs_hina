@@ -20,6 +20,7 @@ class UserUpdate extends \Bbs\Controller {
     $this->setValues('username', $userData->username);
     $this->setValues('email', $userData->email);
     $this->setValues('image', $userData->image);
+    $this->setValues('adminflag', $userData->adminflag);
   }
 
   protected function updateUser() {

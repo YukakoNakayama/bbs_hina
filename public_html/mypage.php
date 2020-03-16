@@ -2,6 +2,8 @@
 require_once(__DIR__ .'/header.php');
 $app = new Bbs\Controller\UserUpdate();
 $app->run();
+$userMod = new Bbs\Model\User();
+$userS = $userMod->getUserAll();
 ?>
 <h1 class="page__ttl">マイページ</h1>
 <div class="container">
@@ -38,6 +40,12 @@ $app->run();
       </div>
     </div>
   </form>
+
+  <?php
+  if($app->getValues()->adminflag == "1") { ?>
+    <a href="<?= SITE_URL; ?>/admin.php">管理者ページ</a>
+  <?php } ?>
+
   <form class="user-delete" action="user_delete_confirm.php" method="post">
     <input type="submit" class="btn btn-default" value="退会する">
     <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
