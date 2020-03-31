@@ -86,13 +86,12 @@ class User extends \Bbs\Model {
   }
 
   public function updateUserAdmin(){
-    $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email, image = :image, delflag = :delflag, created = :created, modified = now() WHERE id = :id");
+    $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email, image = :image, delflag = :delflag, modified = now() WHERE id = :id");
     $stmt->execute([
       ':username' => $_POST['username'.$_POST['id']],
       ':email' => $_POST['email'.$_POST['id']],
       ':image' => $_POST['image'.$_POST['id']],
       ':delflag' => $_POST['delflag'.$_POST['id']],
-      ':created' => $_POST['created'.$_POST['id']],
       ':id' => $_POST['id']
     ]);
   }

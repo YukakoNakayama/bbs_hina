@@ -4,10 +4,8 @@ class UserUpdate extends \Bbs\Controller {
   public function run() {
     $this->showUser();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      if($_POST['type'] === 'admin'){
+      if($_POST['type'] === '更新'){
         $this->updateAdmin();
-      } elseif($_POST['type'] === 'admindelete') {
-        $this->adminDelete();
       } else {
         $this->updateUser();
       }
@@ -78,10 +76,12 @@ class UserUpdate extends \Bbs\Controller {
       'username' => $_POST['username'.$_POST['id']],
       'email' => $_POST['email'.$_POST['id']],
       'image' => $_POST['image'.$_POST['id']],
-      'delflag' => $_POST['delflag'.$_POST['id']],
-      'created' => $_POST['created'.$_POST['id']]
+      'delflag' => $_POST['delflag'.$_POST['id']]
     ]);
     }
+    // $userModel->getUserAll();
+    header('Location: '. SITE_URL . '/admin.php');
+    exit();
   }
 
   protected function adminDelete() {

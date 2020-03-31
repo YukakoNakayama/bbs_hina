@@ -4,6 +4,10 @@ $userMod = new Bbs\Model\User();
 $userS = $userMod->getUserAll();
 $AdminUser = new Bbs\Controller\UserUpdate();
 $AdminUser->run();
+if($AdminUser->getValues()->adminflag == '0'){
+  header('Location: '. SITE_URL . '/login.php');
+  exit();
+}
 ?>
 
 <div class="wrapper">
@@ -19,8 +23,6 @@ $AdminUser->run();
         <th>メールアドレス</th>
         <th>ユーザー画像</th>
         <th>削除フラグ</th>
-        <th>作成日</th>
-        <th>更新日</th>
       </tr>
       <?php foreach ($userS as $user): ?>
         <tr>
@@ -30,17 +32,14 @@ $AdminUser->run();
           <td><input type="text" value="<?= $user->email; ?>" name="email<?= $user->id ?>"></td>
           <td><input type="text" value="<?= $user->image; ?>" name="image<?= $user->id ?>"></td>
           <td><input type="text" value="<?= $user->delflag; ?>" name="delflag<?= $user->id ?>"></td>
-          <td><input type="text" value="<?= $user->created; ?>" name="created<?= $user->id ?>"></td>
-          <td><input type="text" value="<?= $user->modified; ?>" name="modified<?= $user->id ?>"></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
   </table>
   </div>
-  <input type="submit" name="s" onclick="document.getElementByID('userAdmin').submit();" value="更新">
-  <input type="hidden" name="type" value="admin">
+  <input type="submit" name="type" value="更新">
 
-  <input type="submit" name="s" onclick="document.getElementByID('userAdmin').submit();" value="削除">
-  <!-- <input type="hidden" name="type" value="admindelete"> -->
+  <!-- <input type="submit" name="s" onclick="document.getElementByID('userAdmin').submit();" value="削除">
+  <input type="hidden" name="type" value="admindelete"> -->
   </form>
   </div>
