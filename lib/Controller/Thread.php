@@ -107,7 +107,7 @@ class Thread extends \Bbs\Controller {
 
   //バリデーション
   private function validate() {
-    if ($_POST['type'] === 'createthread') {
+    if ($_POST['type'] === 'createThread') {
       if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
         echo "不正なトークンです!";
       exit();

@@ -4,7 +4,7 @@ class UserUpdate extends \Bbs\Controller {
   public function run() {
     $this->showUser();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      if($_POST['type'] === '更新'){
+      if($_POST['type'] === 'admin'){
         $this->updateAdmin();
       } else {
         $this->updateUser();
@@ -67,9 +67,16 @@ class UserUpdate extends \Bbs\Controller {
   }
 
   protected function updateAdmin() {
-    // var_dump($_REQUEST);
-    // exit();
-    if(isset($_POST['id'])) {
+    try {
+      $this->validate();
+    } catch (\Bbs\Exception\InvalidEmail $e) {
+      $this->setErrors('email', $e->getMessage());
+    } catch (\Bbs\Exception\InvalidName $e) {
+      $this->setErrors('username', $e->getMessage());
+    }
+    if ($this->hasError()) {
+      return;
+    } elseif (isset($_POST['id'])) {
     $userModel = new \Bbs\Model\User();
     $userModel->updateUserAdmin([
       'id' => $_POST['id'],
@@ -79,21 +86,9 @@ class UserUpdate extends \Bbs\Controller {
       'delflag' => $_POST['delflag'.$_POST['id']]
     ]);
     }
-    // $userModel->getUserAll();
     header('Location: '. SITE_URL . '/admin.php');
     exit();
   }
-
-  protected function adminDelete() {
-    if(isset($_POST['id'])) {
-      $userModel = new \Bbs\Model\User();
-      $userModel->adminDel([
-        'id' => $_POST['id'],
-        'delflag' => '1'
-      ]);
-      }
-  }
-
 
   private function validate() {
     if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {

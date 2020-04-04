@@ -66,12 +66,14 @@ class Signup extends \Bbs\Controller{
       echo "不正なトークンです！";
         exit();
       }
-      if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
-        throw new \Bbs\Exception\InvalidEmail("メールアドレスが不正です！");
-      }if($_POST['username'] === '') {
-        throw new \Bbs\Exception\InvalidName("ユーザー名が入力されていません！");
-      }if(!preg_match('/\A[a-zA-Z0-9]+\z/', $_POST['password'])) {
-        throw new \Bbs\Exception\InvalidPassword("パスワードが不正です！");
-      }
+    if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
+      throw new \Bbs\Exception\InvalidEmail("メールアドレスが不正です！");
+    }
+    if($_POST['username'] === '') {
+      throw new \Bbs\Exception\InvalidName("ユーザー名が入力されていません！");
+    }
+    if(!preg_match('/\A[a-zA-Z0-9]+\z/', $_POST['password'])) {
+      throw new \Bbs\Exception\InvalidPassword("パスワードが不正です！");
+    }
   }
 }

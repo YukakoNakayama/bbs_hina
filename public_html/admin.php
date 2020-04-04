@@ -37,7 +37,8 @@ if($AdminUser->getValues()->adminflag == '0'){
     </tbody>
   </table>
   </div>
-  <input type="submit" name="type" value="更新">
+  <input type="submit" value="更新">
+  <input type="hidden" name="type" value="admin">
 
   <!-- <input type="submit" name="s" onclick="document.getElementByID('userAdmin').submit();" value="削除">
   <input type="hidden" name="type" value="admindelete"> -->
