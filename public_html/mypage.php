@@ -20,6 +20,7 @@ $userS = $userMod->getUserAll();
         <p class="err"><?= h($app->getErrors('username')); ?></p>
       </div>
       <button class="btn btn-primary" onclick="document.getElementById('userupdate').submit();">更新</button>
+      <input type="hidden" name="type" value="mypage">
       <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
       <input type="hidden" name="old_image" value="<?= h($app->getValues()->image); ?>">
       <p class="err"></p>

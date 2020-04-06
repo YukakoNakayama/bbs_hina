@@ -63,6 +63,8 @@ class Thread extends \Bbs\Controller {
   }
 
   public function outputCsv($thread_id) {
+    // var_dump($thread_id);
+    // exit();
     try {
       $threadModel = new \Bbs\Model\Thread();
       $data = $threadModel->getCommentCsv($thread_id);

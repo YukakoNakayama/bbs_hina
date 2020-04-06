@@ -67,16 +67,7 @@ class UserUpdate extends \Bbs\Controller {
   }
 
   protected function updateAdmin() {
-    try {
-      $this->validate();
-    } catch (\Bbs\Exception\InvalidEmail $e) {
-      $this->setErrors('email', $e->getMessage());
-    } catch (\Bbs\Exception\InvalidName $e) {
-      $this->setErrors('username', $e->getMessage());
-    }
-    if ($this->hasError()) {
-      return;
-    } elseif (isset($_POST['id'])) {
+  if (isset($_POST['id'])) {
     $userModel = new \Bbs\Model\User();
     $userModel->updateUserAdmin([
       'id' => $_POST['id'],
